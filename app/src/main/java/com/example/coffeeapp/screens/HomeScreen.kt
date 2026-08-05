@@ -1,8 +1,10 @@
 package com.example.coffeeapp.screens
 
+
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -16,14 +18,23 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyHorizontalGrid
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.KeyboardArrowDown
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.IconButtonDefaults
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
@@ -45,25 +56,28 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.coffeeapp.R
 import com.example.coffeeapp.components.BottomNavBar
+import com.example.coffeeapp.components.CoffeeProfileCard
+import com.example.coffeeapp.components.HomeScreenCategory
+import com.example.coffeeapp.components.SearchBar
+import com.example.coffeeapp.model.Product
 import com.example.coffeeapp.ui.theme.CharcoalGrey
 import com.example.coffeeapp.ui.theme.CoffeeBrown
 import com.example.coffeeapp.ui.theme.CreamBeige
 import com.example.coffeeapp.ui.theme.LightBrown
-import java.util.function.IntConsumer
+
 
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
 fun HomeScreen() {
     var location by remember { mutableStateOf("Rajiv Chowk,New Delhi") }
-    val coffeeType =listOf("All Coffee", "Maccciato","Latte","Cappuccino","Americano")
+
     Scaffold(
         bottomBar = { BottomNavBar() },
         topBar = {}
-    ) {
-        innerPadding->
+    ) { innerPadding ->
         Box(
-            modifier=Modifier.fillMaxWidth()
-                .fillMaxHeight(1f/3f)
+            modifier = Modifier.fillMaxWidth()
+                .fillMaxHeight(1f / 3f)
                 .background(
                     brush = Brush.linearGradient(
                         colors = listOf(
@@ -75,18 +89,19 @@ fun HomeScreen() {
                 )
         )
         Column(
-            modifier=Modifier.fillMaxSize()
+            modifier = Modifier.fillMaxSize()
                 .padding(16.dp)
                 .padding(innerPadding)
 
         ) {
-            Text(text="Location",
+            Text(
+                text = "Location",
                 fontSize = 18.sp,
                 fontWeight = FontWeight.Normal,
                 color = CharcoalGrey
-                )
+            )
             Row(
-                modifier=Modifier.fillMaxWidth(),
+                modifier = Modifier.fillMaxWidth(),
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Text(
@@ -98,84 +113,28 @@ fun HomeScreen() {
                 Icon(
                     imageVector = Icons.Default.KeyboardArrowDown,
                     contentDescription = "Arrow",
-                    tint=CharcoalGrey
+                    tint = CharcoalGrey
                 )
             }
             Spacer(modifier = Modifier.height(10.dp))
-            Row(
-                modifier=Modifier.fillMaxWidth(),
-                verticalAlignment=Alignment.CenterVertically
-            ) {
-                TextField(
-                    value="",
-                    onValueChange = {},
-                    leadingIcon = {
-                        Icon(
-                            painter = painterResource(id=R.drawable.regular_outline_search),
-                            contentDescription = "Search Icon"
-                        )
-                    },
-                    placeholder = {
-                        Text(
-                            text="Search coffee"
-                        )
-                    },
-                    colors = TextFieldDefaults.colors(
-                        focusedContainerColor = CharcoalGrey,
-
-                        focusedTextColor = Color.White,
-                        unfocusedTextColor = Color.White,
-                        focusedIndicatorColor = Color.Transparent,
-                        unfocusedIndicatorColor = Color.Transparent,
-                        cursorColor = Color.White,
-
-                    ),
-                    modifier = Modifier.border(
-                        width = 2.dp,
-                        shape= RoundedCornerShape(
-                            topStart=16.dp,
-                            bottomStart=16.dp,
-                            topEnd=0.dp,
-                            bottomEnd=0.dp
-                        ),
-                        color = Color.DarkGray
-
-                    )
-                )
-                Spacer(modifier = Modifier.width(10.dp))
-                Box(
-                    modifier = Modifier.border(
-                        width = 10.dp,
-                        shape= RoundedCornerShape(
-                            topStart=0.dp,
-                            bottomStart=0.dp,
-                            topEnd=16.dp,
-                            bottomEnd=16.dp),
-                        color=CoffeeBrown
-                    )
-                        .background(CoffeeBrown)
-                        .size(56.dp),
-                    contentAlignment = Alignment.Center
-                ){
-                Icon(
-                    painter = painterResource(id=R.drawable.regular_outline_filter),
-                    contentDescription = "Filter Icon",
-
-
-                )
-                }
-
-            }
-            Spacer(modifier = Modifier.height(24.dp))
+            SearchBar()
+            Spacer(modifier = Modifier.height(12.dp))
             Image(
                 painter = painterResource(R.drawable.banner_1),
                 contentDescription = "Banner Image"
             )
-            LazyRow(
-                modifier = Modifier.fillMaxWidth()
-            ) {
-            }
-        }
+            Spacer(modifier = Modifier.height(8.dp))
+            HomeScreenCategory()
 
-    }
-}
+            LazyColumn(modifier = Modifier.fillMaxSize()) {
+                items(10) { index ->
+
+                        CoffeeProfileCard()
+                    Spacer(modifier = Modifier.height(12.dp))
+
+                }
+
+            }
+
+        }
+    }}
