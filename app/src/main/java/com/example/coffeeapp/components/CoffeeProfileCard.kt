@@ -1,5 +1,6 @@
 package com.example.coffeeapp.components
 
+import android.graphics.Paint
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -28,6 +29,7 @@ import androidx.compose.ui.Alignment.Companion.TopEnd
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -35,33 +37,65 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil3.Image
 import com.example.coffeeapp.R
+import com.example.coffeeapp.model.Product
+import com.example.coffeeapp.ui.theme.CharcoalGrey
 import com.example.coffeeapp.ui.theme.CoffeeBrown
+import com.example.coffeeapp.ui.theme.CreamBeige
+import com.example.coffeeapp.ui.theme.IvoryWhite
 
-@Preview(showBackground = true, showSystemUi = true)
 @Composable
-fun CoffeeProfileCard() {
+fun CoffeeProfileCard(
+    product: Product,
+    modifier: Modifier = Modifier
+) {
     Card(
-        modifier = Modifier.width(150.dp).height(240.dp)
+        modifier = modifier.fillMaxSize()
             .background(Color.White.copy(0.1f), RoundedCornerShape(16.dp)),
         elevation = CardDefaults.cardElevation(
-            defaultElevation = 10.dp
+            defaultElevation = 5.dp
+        ),
+        colors = CardDefaults.cardColors(
+            containerColor = IvoryWhite,
+            contentColor = CharcoalGrey
         )
     ) {
+        Box(modifier=Modifier.fillMaxWidth()) {
         Image(
-            painter = painterResource(R.drawable.coffee_1),
-            contentDescription = "Coffee Image",
+            painter = painterResource(product.imageUrl),
+            contentDescription = "${product.name} Image",
             modifier = Modifier.fillMaxWidth()
         )
+            Box(
+                modifier= Modifier.align(Alignment.TopEnd)
+                    .padding(6.dp)
+            ){
+                IconButton(
+                    onClick = {},
+                    shape = RoundedCornerShape(8.dp),
+                    colors = IconButtonDefaults.iconButtonColors(
+                        containerColor = CreamBeige.copy(alpha = 0.5f)
+                    ),
+                    modifier = Modifier.size(36.dp)
+                ) {
+                    Icon(
+                        painter = painterResource(R.drawable.regular_outline_heart),
+                        contentDescription = "Wishlist Icon",
+                        tint = CoffeeBrown,
+                        modifier=Modifier.size(24.dp)
+                    )
+                }
+            }
+        }
         Column(
             modifier = Modifier.padding(start = 8.dp)
         ) {
             Text(
-                text = "Espresso",
+                text = product.name,
                 fontWeight = FontWeight.SemiBold,
                 fontSize = 14.sp
             )
             Text(
-                text = "Strong ad rich",
+                text = product.description,
                 fontSize = 12.sp
             )
         }
@@ -70,13 +104,16 @@ fun CoffeeProfileCard() {
                     .padding(start = 8.dp,
                         end=8.dp,
                         bottom = 8.dp),
-                horizontalArrangement = Arrangement.SpaceBetween
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
             ) {
-                Text(text = "₹3.8",
+                Text(text = "₹ ${product.price}",
                     modifier= Modifier.fillMaxHeight(),
                     textAlign = TextAlign.Center,
                     fontWeight = FontWeight.SemiBold,
-                    color = CoffeeBrown)
+                    color = CoffeeBrown,
+                    fontSize = 24.sp,
+                    lineHeight = 1.sp)
                 IconButton(
                     onClick = {},
                     modifier = Modifier.size(36.dp),
@@ -93,19 +130,7 @@ fun CoffeeProfileCard() {
                     )
                 }
             }
-        IconButton(
-            onClick = {},
-            shape = RoundedCornerShape(8.dp),
-            colors = IconButtonDefaults.iconButtonColors(
-                contentColor = Color.White.copy(alpha = 0.1f)
-            )
-        ) {
-            Icon(
-                painter = painterResource(R.drawable.regular_outline_heart),
-                contentDescription = "Wishlist Icon",
-                tint = CoffeeBrown
-            )
-        }
+
         }
     }
 

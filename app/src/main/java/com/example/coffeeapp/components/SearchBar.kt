@@ -8,8 +8,11 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.IconButtonDefaults
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
@@ -22,10 +25,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
 import com.example.coffeeapp.R
 import com.example.coffeeapp.ui.theme.CharcoalGrey
 import com.example.coffeeapp.ui.theme.CoffeeBrown
+import com.example.coffeeapp.ui.theme.IvoryWhite
 
 @Composable
 fun SearchBar() {
@@ -37,10 +42,16 @@ fun SearchBar() {
         TextField(
             value=search,
             onValueChange = {search=it},
+            maxLines = 1,
+            keyboardOptions = KeyboardOptions(
+                imeAction= ImeAction.Done
+
+            ),
             leadingIcon = {
                 Icon(
                     painter = painterResource(id=R.drawable.regular_outline_search),
-                    contentDescription = "Search Icon"
+                    contentDescription = "Search Icon",
+                    tint=CoffeeBrown
                 )
             },
             shape = RoundedCornerShape(
@@ -55,13 +66,11 @@ fun SearchBar() {
                 )
             },
             colors = TextFieldDefaults.colors(
-                focusedContainerColor = CharcoalGrey,
-
-                focusedTextColor = Color.White,
-                unfocusedTextColor = Color.White,
-                focusedIndicatorColor = Color.Transparent,
-                unfocusedIndicatorColor = Color.Transparent,
-                cursorColor = Color.White,
+                focusedContainerColor = IvoryWhite,
+                unfocusedContainerColor = IvoryWhite,
+                focusedTextColor = CharcoalGrey,
+                unfocusedTextColor = CharcoalGrey,
+                cursorColor = CharcoalGrey,
 
                 ),
             modifier = Modifier.border(
@@ -72,21 +81,26 @@ fun SearchBar() {
                     topEnd=0.dp,
                     bottomEnd=0.dp
                 ),
-                color = Color.DarkGray
+                color = CoffeeBrown
 
             )
         )
         Spacer(modifier = Modifier.width(10.dp))
         IconButton (
-            modifier = Modifier.background(
-                color= CoffeeBrown,
-                shape= RoundedCornerShape(
-                    topStart=0.dp,
-                    bottomStart=0.dp,
-                    topEnd=16.dp,
-                    bottomEnd=16.dp)
-            )
-                .size(56.dp),
+            modifier = Modifier
+                .size(56.dp)
+                .background(
+                    color = CoffeeBrown,
+                    shape = RoundedCornerShape(
+                        topStart=0.dp,
+                        bottomStart=0.dp,
+                        topEnd=16.dp,
+                        bottomEnd=16.dp
+                    )
+                ),
+            colors = IconButtonDefaults.iconButtonColors(
+                contentColor = IvoryWhite
+            ),
             onClick = {}
         ){
             Icon(

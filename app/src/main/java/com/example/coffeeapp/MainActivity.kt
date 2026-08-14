@@ -13,6 +13,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.coffeeapp.screens.HomeScreen
 import com.example.coffeeapp.screens.WelcomeScreen
+import com.example.coffeeapp.screens.detailscreen.DetailScreen
 import com.example.coffeeapp.ui.theme.CoffeeAppTheme
 
 class MainActivity : ComponentActivity() {
@@ -21,7 +22,7 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             CoffeeAppTheme {
-                HomeScreen()
+                DetailScreen()
             }
         }
     }

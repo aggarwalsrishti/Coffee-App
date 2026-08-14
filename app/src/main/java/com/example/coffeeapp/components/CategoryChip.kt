@@ -19,6 +19,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.coffeeapp.ui.theme.CoffeeBrown
+import com.example.coffeeapp.ui.theme.CreamBeige
+import com.example.coffeeapp.ui.theme.IvoryWhite
 
 
 @Composable
@@ -34,12 +36,12 @@ fun CategoryChip(
             .clickable{onSelected()}
             .padding(vertical = 8.dp, horizontal = 4.dp),
         colors = ButtonDefaults.buttonColors(
-            containerColor = if (isSelected) CoffeeBrown else Color.White,
-            contentColor = if (isSelected) Color.White else CoffeeBrown
+            containerColor = if (isSelected) CoffeeBrown else IvoryWhite,
+            contentColor = if (isSelected) IvoryWhite else CoffeeBrown
 
         ),
         elevation = ButtonDefaults.buttonElevation(
-            defaultElevation = 12.dp
+            defaultElevation = 5.dp
         )
 
     ) {

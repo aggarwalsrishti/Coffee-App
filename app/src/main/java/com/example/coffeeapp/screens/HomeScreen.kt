@@ -58,11 +58,13 @@ import com.example.coffeeapp.R
 import com.example.coffeeapp.components.BottomNavBar
 import com.example.coffeeapp.components.CoffeeProfileCard
 import com.example.coffeeapp.components.HomeScreenCategory
+import com.example.coffeeapp.components.ProductsGrid
 import com.example.coffeeapp.components.SearchBar
 import com.example.coffeeapp.model.Product
 import com.example.coffeeapp.ui.theme.CharcoalGrey
 import com.example.coffeeapp.ui.theme.CoffeeBrown
 import com.example.coffeeapp.ui.theme.CreamBeige
+import com.example.coffeeapp.ui.theme.IvoryWhite
 import com.example.coffeeapp.ui.theme.LightBrown
 
 
@@ -75,22 +77,34 @@ fun HomeScreen() {
         bottomBar = { BottomNavBar() },
         topBar = {}
     ) { innerPadding ->
+        Column(
+            modifier = Modifier.fillMaxSize()
+        ) {
         Box(
             modifier = Modifier.fillMaxWidth()
                 .fillMaxHeight(1f / 3f)
                 .background(
+
                     brush = Brush.linearGradient(
                         colors = listOf(
                             CoffeeBrown,
                             LightBrown,
-                            CreamBeige
+
+                            Color.White
                         )
                     )
                 )
         )
+        Box(
+            modifier = Modifier.fillMaxWidth()
+                .fillMaxHeight()
+                .background(CreamBeige)
+
+                .background(CreamBeige)
+        )}
         Column(
             modifier = Modifier.fillMaxSize()
-                .padding(16.dp)
+                .padding(start=16.dp,end=16.dp,top=6.dp)
                 .padding(innerPadding)
 
         ) {
@@ -126,15 +140,17 @@ fun HomeScreen() {
             Spacer(modifier = Modifier.height(8.dp))
             HomeScreenCategory()
 
-            LazyColumn(modifier = Modifier.fillMaxSize()) {
-                items(10) { index ->
+            //Displaying Products
+            val products = listOf(
+                Product(1,"Espresso","Strong and rich",3.80,R.drawable.coffee_1),
+                Product(2, "Cappuccino","Smooth and creamy",4.20,R.drawable.coffee_2),
+                Product(3,"Latte","Creamy and rich",2.90,R.drawable.coffee_3),
+                Product(4,"Mocha","Espresso with chocolate",5.10,R.drawable.coffee_4),
+                Product(5,"Macchiato","Espresso with a dash of milk",4.80,R.drawable.coffee_5)
+            )
 
-                        CoffeeProfileCard()
-                    Spacer(modifier = Modifier.height(12.dp))
 
-                }
-
-            }
+            ProductsGrid(products = products)
 
         }
     }}

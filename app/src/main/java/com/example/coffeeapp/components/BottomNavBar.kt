@@ -2,6 +2,7 @@ package com.example.coffeeapp.components
 
 
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Icon
@@ -16,8 +17,10 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.CreationExtras
 import com.example.coffeeapp.R
 import com.example.coffeeapp.ui.theme.CoffeeBrown
+import com.example.coffeeapp.ui.theme.CreamBeige
 
 
 @Preview(showBackground = true, showSystemUi = true)
@@ -31,7 +34,7 @@ fun BottomNavBar() {
     )
     NavigationBar(
         containerColor = MaterialTheme.colorScheme.surface,
-        modifier = Modifier.height(124.dp)
+        modifier = Modifier.height(124.dp).background(CreamBeige.copy(alpha = 0.5f))
     ) {
         navItems.forEachIndexed { index, item->
             NavigationBarItem(
