@@ -54,6 +54,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
 import com.example.coffeeapp.R
 import com.example.coffeeapp.components.BottomNavBar
 import com.example.coffeeapp.components.CoffeeProfileCard
@@ -68,13 +69,14 @@ import com.example.coffeeapp.ui.theme.IvoryWhite
 import com.example.coffeeapp.ui.theme.LightBrown
 
 
-@Preview(showBackground = true, showSystemUi = true)
 @Composable
-fun HomeScreen() {
+fun HomeScreen(navController: NavHostController) {
     var location by remember { mutableStateOf("Rajiv Chowk,New Delhi") }
 
     Scaffold(
-        bottomBar = { BottomNavBar() },
+        bottomBar = { BottomNavBar(
+            navController = navController
+        ) },
         topBar = {}
     ) { innerPadding ->
         Column(
@@ -87,6 +89,7 @@ fun HomeScreen() {
 
                     brush = Brush.linearGradient(
                         colors = listOf(
+
                             CoffeeBrown,
                             LightBrown,
 
@@ -142,15 +145,20 @@ fun HomeScreen() {
 
             //Displaying Products
             val products = listOf(
-                Product(1,"Espresso","Strong and rich",3.80,R.drawable.coffee_1),
-                Product(2, "Cappuccino","Smooth and creamy",4.20,R.drawable.coffee_2),
-                Product(3,"Latte","Creamy and rich",2.90,R.drawable.coffee_3),
-                Product(4,"Mocha","Espresso with chocolate",5.10,R.drawable.coffee_4),
-                Product(5,"Macchiato","Espresso with a dash of milk",4.80,R.drawable.coffee_5)
+                Product(1,"Espresso","Strong and rich",listOf("S","M","L"),listOf(100,150,200),R.drawable.coffee_1),
+                Product(2, "Cappuccino","Smooth and creamy",listOf("S","M","L"),listOf(90,120,150),R.drawable.coffee_2),
+                Product(3,"Latte","Creamy and rich",listOf("S","M","L"),listOf(95,100,110),R.drawable.coffee_3),
+                Product(4,"Mocha","Espresso with chocolate",listOf("S","M","L"),listOf(100,120,130),R.drawable.coffee_4),
+                Product(5,"Macchiato","Espresso with a dash of milk",listOf("S","M","L"),listOf(110,120,150),R.drawable.coffee_5),
+                Product(6,"Americano","Espresso with hot water",listOf("S","M","L"),listOf(90,100,110),R.drawable.coffee_1),
+                Product(7,"Flat White","Espresso with steamed milk",listOf("S","M","L"),listOf(100,120,140),R.drawable.coffee_2),
+                Product(8,"Iced Coffee","Cold and refreshing",listOf("S","M","L"),listOf(100,120,140),R.drawable.coffee_3),
+                Product(9,"Affogato","Espresso poured over ice cream",listOf("S","M","L"),listOf(100,120,140),R.drawable.coffee_4)
+
             )
 
 
-            ProductsGrid(products = products)
+            ProductsGrid(products = products,navController = navController)
 
         }
     }}

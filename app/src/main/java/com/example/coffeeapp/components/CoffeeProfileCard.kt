@@ -1,6 +1,7 @@
 package com.example.coffeeapp.components
 
 import android.graphics.Paint
+import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -27,29 +28,44 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.TopEnd
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
 import coil3.Image
 import com.example.coffeeapp.R
 import com.example.coffeeapp.model.Product
+import com.example.coffeeapp.navigation.NavigationRoute
 import com.example.coffeeapp.ui.theme.CharcoalGrey
 import com.example.coffeeapp.ui.theme.CoffeeBrown
 import com.example.coffeeapp.ui.theme.CreamBeige
 import com.example.coffeeapp.ui.theme.IvoryWhite
+import com.example.coffeeapp.ui.theme.LightBrown
 
 @Composable
 fun CoffeeProfileCard(
     product: Product,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    navController: NavHostController
 ) {
+    val backcolor=Brush.linearGradient(
+        colors = listOf(
+
+            CoffeeBrown,
+            LightBrown,
+            Color.White
+        )
+    )
     Card(
-        modifier = modifier.fillMaxSize()
+        modifier = modifier
+            .fillMaxSize()
             .background(Color.White.copy(0.1f), RoundedCornerShape(16.dp)),
         elevation = CardDefaults.cardElevation(
             defaultElevation = 5.dp
@@ -66,11 +82,14 @@ fun CoffeeProfileCard(
             modifier = Modifier.fillMaxWidth()
         )
             Box(
-                modifier= Modifier.align(Alignment.TopEnd)
+                modifier= Modifier
+                    .align(Alignment.TopEnd)
                     .padding(6.dp)
             ){
                 IconButton(
-                    onClick = {},
+                    onClick = {
+                        Toast.makeText(navController.context, "Added to Favourites", Toast.LENGTH_SHORT).show()
+                    },
                     shape = RoundedCornerShape(8.dp),
                     colors = IconButtonDefaults.iconButtonColors(
                         containerColor = CreamBeige.copy(alpha = 0.5f)
@@ -96,18 +115,23 @@ fun CoffeeProfileCard(
             )
             Text(
                 text = product.description,
-                fontSize = 12.sp
+                fontSize = 12.sp,
+                minLines = 2,
+                overflow = TextOverflow.Ellipsis,
             )
         }
             Row(
-                modifier = Modifier.fillMaxWidth()
-                    .padding(start = 8.dp,
-                        end=8.dp,
-                        bottom = 8.dp),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(
+                        start = 8.dp,
+                        end = 8.dp,
+                        bottom = 8.dp
+                    ),
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                Text(text = "₹ ${product.price}",
+                Text(text = "₹ ${product.price.first()}",
                     modifier= Modifier.fillMaxHeight(),
                     textAlign = TextAlign.Center,
                     fontWeight = FontWeight.SemiBold,
@@ -115,7 +139,9 @@ fun CoffeeProfileCard(
                     fontSize = 24.sp,
                     lineHeight = 1.sp)
                 IconButton(
-                    onClick = {},
+                    onClick = {
+                        navController.navigate(NavigationRoute.DetailScreen(product.id))
+                    },
                     modifier = Modifier.size(36.dp),
                     shape = RoundedCornerShape(8.dp),
                     colors = IconButtonDefaults.iconButtonColors(

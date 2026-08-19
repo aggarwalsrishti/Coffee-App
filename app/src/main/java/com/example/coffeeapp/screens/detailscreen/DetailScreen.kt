@@ -20,9 +20,14 @@ import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.layout.ContentScale
@@ -31,20 +36,38 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
 import com.example.coffeeapp.R
 import com.example.coffeeapp.ui.theme.CharcoalGrey
 import com.example.coffeeapp.ui.theme.CoffeeBrown
 import com.example.coffeeapp.ui.theme.CreamBeige
 import com.example.coffeeapp.ui.theme.IvoryWhite
+import com.example.coffeeapp.ui.theme.LightBrown
 
-@Preview(showBackground = true, showSystemUi = true)
+
 @Composable
-fun DetailScreen() {
+fun DetailScreen(navController: NavHostController,
+                 coffeeId: Int) {
+    val quantity = listOf("S","M","L")
+    val price=listOf(100,150,200)
+    var selectedQuantity by remember { mutableStateOf(quantity.first()) }
+    var selectedPrice by remember { mutableStateOf(price.first()) }
+    val backcolor=Brush.linearGradient(
+        colors = listOf(
+
+            CoffeeBrown,
+            LightBrown,
+            Color.White
+        )
+    )
     Scaffold(
         modifier = Modifier.fillMaxSize(),
-        topBar={TopBarDetailScreen()},
-        bottomBar = {BottomBarDetailScreen()},
-        containerColor = CreamBeige
+        topBar={TopBarDetailScreen(
+            navController = navController,
+        )},
+        bottomBar = {BottomBarDetailScreen(price=selectedPrice,
+            navController=navController)},
+        containerColor = CreamBeige.copy(alpha = 0.8f)
     ) { innerPadding ->
         Column(
             modifier = Modifier.fillMaxSize()
@@ -91,33 +114,18 @@ fun DetailScreen() {
                         fontSize = 16.sp,
                         color=CharcoalGrey
                     )
-                    Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.SpaceBetween
-                    ) {
-                        Button(
-                            onClick = {},
-                            shape = RoundedCornerShape(8.dp),
-                            modifier=Modifier.width(100.dp)
-                        ) {
-                            Text(text = "S")
+                    Spacer(modifier = Modifier.height(16.dp))
+                    QuantityRow(
+                        quantity=quantity,
+                        selectedQuantity=selectedQuantity,
+                        price=price,
+                        onselectedQuantity = {
+                            selectedsize, selectedSizePrice->
+                            selectedQuantity=selectedsize
+                            selectedPrice=selectedSizePrice
                         }
-                        Button(
-                            onClick = {},
-                            shape = RoundedCornerShape(8.dp),
-                            modifier=Modifier.width(100.dp)
-                        ) {
-                            Text(text = "M")
-                        }
-                        Button(
-                            onClick = {},
-                            shape = RoundedCornerShape(8.dp),
-                            modifier=Modifier.width(100.dp)
-                        ) {
-                            Text(text = "L")
-                        }
-
-                    }
+                    )
+                    Spacer(modifier = Modifier.height(16.dp))
                 }
             }
 
